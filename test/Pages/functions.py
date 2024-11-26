@@ -109,6 +109,14 @@ class table_input():
         except sa.exc.OperationalError as e:
             result_order = []
 
+        try:
+            query_order = sa.text("SELECT * FROM orders")
+            result_order = session.execute(query_order).mappings().all()
+
+        except sa.exc.OperationalError as e:
+            result_order = []
+
+        self.session = Session()
         self.result_lumber = result_lumber
         self.result_client = result_client
         self.result_order = result_order

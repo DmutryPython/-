@@ -1,13 +1,15 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
-import sys
-from pages import client, Lumber_input, order
+from PyQt6.QtWidgets import QMainWindow, QStackedWidget
+from Pages.Client import Client
+from Pages.Lumber import Lumber
+from Pages.Order import Order
+from Pages.ProductionTask import ProductionTask
 from Pages.Commercial import CommercialPage
 from Pages.home import MainPage
 from Pages.Production import ProductionPage
 from Pages.Technology import TechnologyPage
 import sys
 import traceback
-from PyQt6.QtWidgets import QApplication, QWidget, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMessageBox
 
 
 def my_excepthook(exc_type, exc_value, exc_traceback):
@@ -39,11 +41,12 @@ class MainWindow(QMainWindow):
         self.commercial_page = CommercialPage(self.show_lumber_input_page, self.show_client_page, self.show_order_page,
                                               self.show_main_page)
         self.production_page = ProductionPage(self.show_lumber_input_page, self.show_order_page, self.show_main_page)
-        self.technology_page = TechnologyPage(self.show_lumber_input_page, self.show_main_page)
-        self.lumber_input_page = Lumber_input(self.show_last_page, self.commercial_page, self.production_page,
+        self.technology_page = TechnologyPage(self.show_lumber_input_page, self.show_page, self.show_main_page)
+        self.lumber_input_page = Lumber(self.show_last_page, self.commercial_page, self.production_page,
                                               self.technology_page)
-        self.client_page = client(self.show_last_page, self.commercial_page)
-        self.order_page = order(self.show_last_page, self.commercial_page, self.production_page)
+        self.client_page = Client(self.show_last_page, self.commercial_page)
+        self.productionTask_page = ProductionTask(self.show_last_page)
+        self.order_page = Order(self.show_last_page)
 
         self.stacked_widget.addWidget(self.main_page)
         self.stacked_widget.addWidget(self.commercial_page)
@@ -52,6 +55,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.lumber_input_page)
         self.stacked_widget.addWidget(self.client_page)
         self.stacked_widget.addWidget(self.order_page)
+        self.stacked_widget.addWidget(self.productionTask_page)
 
     # Методы для навигации
     def show_last_page(self):
@@ -81,6 +85,10 @@ class MainWindow(QMainWindow):
     def show_order_page(self):
         self.last_page = self.stacked_widget.currentWidget()
         self.stacked_widget.setCurrentWidget(self.order_page)
+
+    def show_page(self):
+        self.last_page = self.stacked_widget.currentWidget()
+        self.stacked_widget.setCurrentWidget(self.productionTask_page)
 
 
 if __name__ == "__main__":

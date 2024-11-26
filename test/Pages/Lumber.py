@@ -6,26 +6,24 @@ import csv
 from sqlalchemy import exc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from Pages.sql.database_model import Base, Orders, clienttab
+from .sql.database_model import Base, Orders, clienttab
 import logging
-from Pages.sql.database_model import WoodProducts
+from .sql.database_model import WoodProducts
 import os
 import sqlalchemy as sa
 
 
 db_path = os.path.join("Pages", "sql", "wood_production.db")
 absolute_path = os.path.abspath(db_path)
+from .functions import table_input
 
 
-class Lumber_input(QWidget):
+class Lumber(QWidget):
     def __init__(self, navigate_back, commercial_page, production_page, technology_page):
         super().__init__()
 
-        self.setWindowTitle("Add New Lumber")
-        engine = create_engine(f"sqlite:///{absolute_path}")
-        Base.metadata.create_all(engine)
-        Session = sessionmaker(bind=engine)
-        self.session = Session()
+        tab = table_input()
+        self.session = tab.session
 
         self.commercial_page = commercial_page
         self.production_page = production_page
@@ -77,63 +75,3 @@ class Lumber_input(QWidget):
 
         else:
             QMessageBox.warning(self, "Ошибка", "Введите вид древесины для сохранения.")
-
-
-class client(QWidget):
-    def __init__(self, navigate_back, commercial_page):
-        super().__init__()
-
-        self.setWindowTitle("Add New client")
-        engine = create_engine(f"sqlite:///{absolute_path}")
-        Base.metadata.create_all(engine)
-        Session = sessionmaker(bind=engine)
-        self.session = Session()
-
-        self.commercial_page = commercial_page
-
-        label_text = QLabel("Имя клиента")
-        self.lumber_input = QLineEdit()
-        self.lumber_input.setPlaceholderText("Имя клиента")
-
-        save_button = QPushButton("Сохранить")
-        save_button.clicked.connect(self.save_client_to_csv)
-
-        self.line_edit_int = QLineEdit()
-        self.line_edit_int.setPlaceholderText("Информация")
-
-        back_button = QPushButton("Назад")
-        back_button.clicked.connect(navigate_back)
-
-        layout = QVBoxLayout()
-        layout.addWidget(label_text)
-        layout.addWidget(self.lumber_input)
-        layout.addWidget(self.line_edit_int)
-        layout.addWidget(save_button)
-        layout.addWidget(back_button)
-
-        self.setLayout(layout)
-
-    def save_client_to_csv(self):
-        client_name = self.lumber_input.text()
-        info = self.line_edit_int.text()
-        if client_name:
-            new_order = clienttab(
-                ClientName=client_name,
-                ClientInfo=info,
-            )
-
-            self.session.add(new_order)
-            self.session.commit()
-            QMessageBox.information(self, "Success", "Order added successfully!")
-        else:
-            QMessageBox.warning(self, "Ошибка", "Введите имя для сохранения")
-
-
-
-
-
-
-
-
-
-

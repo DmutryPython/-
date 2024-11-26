@@ -2,7 +2,7 @@ from .functions import PandasModel, table_input, ConditionalColorDelegate
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QTableView
 
 class TechnologyPage(QWidget):
-    def __init__(self, navigate_to_lumber_input, navigate_back):
+    def __init__(self, navigate_to_lumber_input, productionTask_page, navigate_back):
         super().__init__()
 
         self.tab = table_input()
@@ -13,6 +13,10 @@ class TechnologyPage(QWidget):
         # Кнопка навигации
         button_second_page = QPushButton("Добавить древесину")
         button_second_page.clicked.connect(navigate_to_lumber_input)
+
+        button_productionTask = QPushButton("Добавить задачу")
+        button_productionTask.clicked.connect(productionTask_page)
+
         back_button = QPushButton("Назад")
         back_button.clicked.connect(navigate_back)
 
@@ -25,6 +29,7 @@ class TechnologyPage(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(label_description)
         layout.addWidget(button_second_page)
+        layout.addWidget(button_productionTask)
         layout.addWidget(back_button)
         layout.addWidget(self.table_lumber)  # Добавляем таблицу на страницу
 
