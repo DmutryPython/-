@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButto
                              QStackedWidget, QTableWidget, QTableWidgetItem)
 from PyQt6.QtGui import QIntValidator
 import csv
+from .functions import update_list, load_csv_lumber
 
 class TechnologyPage(QWidget):
     def __init__(self, navigate_to_lumber_input, navigate_back):
@@ -34,23 +35,7 @@ class TechnologyPage(QWidget):
         self.setLayout(layout)
 
     def load_csv_lumber(self, csv_file_path, table_widget):
-        # Очищаем таблицу перед загрузкой новых данных
-        table_widget.setRowCount(0)
+        load_csv_lumber(self, csv_file_path, table_widget)
 
-        # Открываем CSV-файл и читаем данные
-        with open(csv_file_path, "r", newline="") as file:
-            reader = csv.reader(file)
-
-            self.table.setColumnCount(2)
-            self.table.setHorizontalHeaderLabels(["Вид лесопродукции", "цена"])
-
-            # Читаем строки данных и добавляем их в таблицу
-            for row_index, row_data in enumerate(reader):
-                table_widget.insertRow(row_index)
-                for col_index, cell_data in enumerate(row_data):
-                    item = QTableWidgetItem(cell_data)
-                    table_widget.setItem(row_index, col_index, item)
-
-    def update_lumber_list(self):
-        # Метод для обновления данных в таблице
-        self.load_csv_lumber("resources/lumber_types.csv", self.table)
+    def update_list(self, path):
+        update_list(self, path)

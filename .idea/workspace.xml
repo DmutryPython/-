@@ -4,22 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Лесозавод (нто).iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Pages/Commercial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Pages/Production.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Pages/Technology.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Pages/func/func.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/Pages/home.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/pages.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/resources/client.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/resources/name.csv" afterDir="false" />
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="1">
+      <change afterPath="$PROJECT_DIR$/test/Pages/functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Commercial.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Commercial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Production.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Production.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Technology.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/func/func.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/pages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/resources/client.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test/resources/client.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +51,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages\func" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\resources" />
@@ -132,7 +126,31 @@
       <option name="presentableId" value="Default" />
       <updated>1731870669489</updated>
     </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1732606530689</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732606530689</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
