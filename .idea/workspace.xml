@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="1">
-      <change afterPath="$PROJECT_DIR$/test/Pages/functions.py" afterDir="false" />
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="2">
+      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/Pages/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/Pages/sql/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/Pages/sql/database_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Commercial.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Commercial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Production.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Production.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Technology.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/func/func.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/pages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resources/client.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test/resources/client.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,20 +43,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.creature.executor": "Run",
+    "Python.database_model.executor": "Run",
+    "Python.main (1).executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.pages.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages\func" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test" />
-      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\resources" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\work" />
     </key>
@@ -134,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732606530689</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="2">
+      <option name="closed" value="true" />
+      <created>1732611376710</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1732611376710</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,7 +165,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
+    <MESSAGE value="2" />
+    <option name="LAST_COMMIT_MESSAGE" value="2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

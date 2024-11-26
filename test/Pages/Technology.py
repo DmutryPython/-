@@ -1,15 +1,13 @@
-from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox,
-                             QStackedWidget, QTableWidget, QTableWidgetItem)
-from PyQt6.QtGui import QIntValidator
-import csv
-from .functions import update_list, load_csv_lumber
+from .functions import PandasModel, table_input, ConditionalColorDelegate
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QTableView
 
 class TechnologyPage(QWidget):
     def __init__(self, navigate_to_lumber_input, navigate_back):
         super().__init__()
-        layout = QVBoxLayout()
 
-        # Заголовок страницы
+        self.tab = table_input()
+        result_lumber = self.tab.result_lumber
+
         label_description = QLabel("Служба технолога")
 
         # Кнопка навигации
@@ -19,23 +17,28 @@ class TechnologyPage(QWidget):
         back_button.clicked.connect(navigate_back)
 
         # Таблица
-        self.table = QTableWidget()
-        self.table.setColumnCount(2)
-        self.table.setHorizontalHeaderLabels(["Название", "Количество"])
-
-        # Загрузка данных из CSV
-        self.load_csv_lumber("resources/lumber_types.csv", self.table)
+        self.table_lumber = QTableView()
+        self.model_lumber = PandasModel(result_lumber)
+        self.table_lumber.setModel(self.model_lumber)
 
         # Добавляем виджеты в компоновку
+        layout = QVBoxLayout()
         layout.addWidget(label_description)
         layout.addWidget(button_second_page)
         layout.addWidget(back_button)
-        layout.addWidget(self.table)  # Добавляем таблицу на страницу
+        layout.addWidget(self.table_lumber)  # Добавляем таблицу на страницу
 
         self.setLayout(layout)
 
-    def load_csv_lumber(self, csv_file_path, table_widget):
-        load_csv_lumber(self, csv_file_path, table_widget)
+    def showEvent(self, event):
+        """Вызывается каждый раз, когда виджет становится видимым."""
+        self.update_tables()
+        super().showEvent(event)
 
-    def update_list(self, path):
-        update_list(self, path)
+    def update_tables(self):
+        """Обновляет данные в таблицах."""
+        self.tab = table_input()
+        result_lumber = self.tab.result_lumber
+
+        self.model_lumber = PandasModel(result_lumber)
+        self.table_lumber.setModel(self.model_lumber)

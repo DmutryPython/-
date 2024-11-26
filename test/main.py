@@ -5,6 +5,20 @@ from Pages.Commercial import CommercialPage
 from Pages.home import MainPage
 from Pages.Production import ProductionPage
 from Pages.Technology import TechnologyPage
+import sys
+import traceback
+from PyQt6.QtWidgets import QApplication, QWidget, QMessageBox
+
+
+def my_excepthook(exc_type, exc_value, exc_traceback):
+    tb_str = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    print(f"Unhandled exception:\n{tb_str}")  # Print to console
+    QMessageBox.critical(None, "Critical Error",
+                         f"An unexpected error occurred. Please contact support.")  # Show to user
+    sys.exit(1)  # Exit the application
+
+
+sys.excepthook = my_excepthook
 
 
 class MainWindow(QMainWindow):
@@ -39,7 +53,6 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.client_page)
         self.stacked_widget.addWidget(self.order_page)
 
-
     # Методы для навигации
     def show_last_page(self):
         if self.last_page:
@@ -69,10 +82,9 @@ class MainWindow(QMainWindow):
         self.last_page = self.stacked_widget.currentWidget()
         self.stacked_widget.setCurrentWidget(self.order_page)
 
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec()
 
-
-
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())

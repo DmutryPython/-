@@ -1,83 +1,95 @@
-from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox,
-                             QStackedWidget, QTableWidget, QTableWidgetItem, QDateEdit, QComboBox)
+from PyQt6.QtWidgets import (QDateEdit, QComboBox, QWidget, QLabel, QLineEdit,
+                             QPushButton, QVBoxLayout, QMessageBox)
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import QDate
 import csv
+from sqlalchemy import exc
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from Pages.sql.database_model import Base, Orders, clienttab
+import logging
+from Pages.sql.database_model import WoodProducts
+import os
+
+
+db_path = os.path.join("Pages", "sql", "wood_production.db")
+absolute_path = os.path.abspath(db_path)
 
 
 class Lumber_input(QWidget):
     def __init__(self, navigate_back, commercial_page, production_page, technology_page):
         super().__init__()
-        layout = QVBoxLayout()
 
-        self.path = "resources/lumber_types.csv"
-
+        self.setWindowTitle("Add New Lumber")
+        engine = create_engine(f"sqlite:///{absolute_path}")
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        self.session = Session()
 
         self.commercial_page = commercial_page
         self.production_page = production_page
         self.technology_page = technology_page
 
-        # Поле для ввода вида древесины
         label_text = QLabel("Введите вид древесины:")
         self.lumber_input = QLineEdit()
         self.lumber_input.setPlaceholderText("вид")
 
-        # Кнопка сохранения в CSV
         save_button = QPushButton("Сохранить")
         save_button.clicked.connect(self.save_lumber_to_csv)
 
-        self.line_edit_int = QLineEdit()
-        int_validator = QIntValidator()
-        self.line_edit_int.setValidator(int_validator)
-        self.line_edit_int.setPlaceholderText("цена")
+        self.time_prod = QLineEdit()
+        self.time_prod.setValidator(QIntValidator())
+        self.time_prod.setPlaceholderText("время производства")
 
-        # Кнопка возврата назад
+        self.workshop = QLineEdit()
+        self.workshop.setValidator(QIntValidator())
+        self.workshop.setPlaceholderText("workshop")
+
         back_button = QPushButton("Назад")
         back_button.clicked.connect(navigate_back)
 
-        # Добавляем виджеты в компоновку
+        layout = QVBoxLayout()
         layout.addWidget(label_text)
         layout.addWidget(self.lumber_input)
-        layout.addWidget(self.line_edit_int)
+        layout.addWidget(self.time_prod)
+        layout.addWidget(self.workshop)
         layout.addWidget(save_button)
         layout.addWidget(back_button)
 
-        # Устанавливаем компоновку для страницы
         self.setLayout(layout)
 
     def save_lumber_to_csv(self):
-        # Получаем текст из поля и проверяем, не пустой ли он
         lumber_type = self.lumber_input.text()
-        price = self.line_edit_int.text()
+        time_prod = self.time_prod.text()
+        workshop = self.workshop.text()
         if lumber_type:
-            # Сохраняем данные в CSV-файл
-            with open("resources/lumber_types.csv", "a", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow([lumber_type, price])
+            new_order = WoodProducts(
+                WoodProductName=lumber_type,
+                ProductionTime=time_prod,
+                ProductionShopID=workshop
+            )
 
-            # Очищаем поле ввода
-            self.lumber_input.clear()
-            self.line_edit_int.clear()
+            self.session.add(new_order)
+            self.session.commit()
+            QMessageBox.information(self, "Success", "Order added successfully!")
 
-            # Показываем сообщение об успешном сохранении
-            QMessageBox.information(self, "Успех", "Вид древесины успешно сохранен!")
 
-            self.commercial_page.update_list(self.path)
-            self.technology_page.update_list(self.path)
-            self.production_page.update_list(self.path)
         else:
-            # Показываем предупреждение, если поле пустое
             QMessageBox.warning(self, "Ошибка", "Введите вид древесины для сохранения.")
 
 
 class client(QWidget):
     def __init__(self, navigate_back, commercial_page):
         super().__init__()
-        layout = QVBoxLayout()
-        self.path = "resources/name.csv"
+
+        self.setWindowTitle("Add New client")
+        engine = create_engine(f"sqlite:///{absolute_path}")
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        self.session = Session()
+
         self.commercial_page = commercial_page
 
-        # Поля для ввода
         label_text = QLabel("Имя клиента")
         self.lumber_input = QLineEdit()
         self.lumber_input.setPlaceholderText("Имя клиента")
@@ -91,6 +103,7 @@ class client(QWidget):
         back_button = QPushButton("Назад")
         back_button.clicked.connect(navigate_back)
 
+        layout = QVBoxLayout()
         layout.addWidget(label_text)
         layout.addWidget(self.lumber_input)
         layout.addWidget(self.line_edit_int)
@@ -103,16 +116,14 @@ class client(QWidget):
         client_name = self.lumber_input.text()
         info = self.line_edit_int.text()
         if client_name:
-            with open("resources/name.csv", "a", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow([client_name, info])
+            new_order = clienttab(
+                ClientName=client_name,
+                ClientInfo=info,
+            )
 
-            self.lumber_input.clear()
-            self.line_edit_int.clear()
-            QMessageBox.information(self, "Успех", "Клиент добавлен")
-
-            # Обновляем таблицу клиентов
-            self.commercial_page.update_list(self.path)
+            self.session.add(new_order)
+            self.session.commit()
+            QMessageBox.information(self, "Success", "Order added successfully!")
         else:
             QMessageBox.warning(self, "Ошибка", "Введите имя для сохранения")
 
@@ -120,17 +131,19 @@ class client(QWidget):
 class order(QWidget):
     def __init__(self, navigate_back, commercial_page, production_page):
         super().__init__()
-        layout = QVBoxLayout()
+
+        self.setWindowTitle("Add New Order")
+        engine = create_engine(f"sqlite:///{absolute_path}")
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        self.session = Session()
 
         self.commercial_page = commercial_page
         self.production_page = production_page
-        self.path = "resources/client.csv"
-
 
         self.combo_box = QComboBox(self)
         self.status_list = ['Черновик', 'Согласован клиентом', 'Принят в производство', 'Выполнен']
         self.combo_box.addItems(self.status_list)
-
 
         self.date_order = QDateEdit(self)
         self.date_order.setDate(QDate.currentDate())
@@ -138,8 +151,8 @@ class order(QWidget):
         self.deadline = QDateEdit(self)
         self.deadline.setDate(QDate.currentDate())
 
-        self.info_client = QLineEdit()
-        self.info_client.setPlaceholderText("Информация о клиенте")
+        self.client = QLineEdit()
+        self.client.setPlaceholderText("Информация о клиенте")
 
         self.lumber = QLineEdit()
         self.lumber.setPlaceholderText("пиломатериал")
@@ -151,21 +164,18 @@ class order(QWidget):
         self.note = QLineEdit()
         self.note.setPlaceholderText("пометка")
 
-
-
         save_button = QPushButton("Сохранить")
-        save_button.clicked.connect(self.save_order_to_csv)
-
-
+        save_button.clicked.connect(self.add_order)
 
         back_button = QPushButton("Назад")
         back_button.clicked.connect(navigate_back)
 
+        layout = QVBoxLayout()
         layout.addWidget(QLabel("дата заказа"))
         layout.addWidget(self.date_order)
         layout.addWidget(QLabel("срок заказа"))
         layout.addWidget(self.deadline)
-        layout.addWidget(self.info_client)
+        layout.addWidget(self.client)
         layout.addWidget(self.lumber)
         layout.addWidget(self.quantity_lumber)
         layout.addWidget(self.note)
@@ -175,50 +185,58 @@ class order(QWidget):
 
         self.setLayout(layout)
 
+    def add_order(self):
+        try:
+            #Get data from input fields (add error handling as needed)
+            date_order = self.date_order.date().toPyDate()
+            deadline = self.deadline.date().toPyDate()
+            client = self.client.text()
+            lumber = self.lumber.text()
+            quantity_lumber = self.quantity_lumber.text()
+            note = self.note.text()
+            status = self.combo_box.currentText()
 
-    def save_order_to_csv(self):
-        status = self.combo_box.currentText()
-        if status != 'Черновик':
-            if (self.date_order.dateTime() and self.deadline.dateTime() and self.info_client.text() and
-                    self.quantity_lumber.text() and self.lumber.text()):
+            if status != 'Черновик':
+                if not all([date_order, deadline, client, quantity_lumber, lumber]):
+                    QMessageBox.warning(self, "Ошибка", "Введены не все данные")
+                    return
 
-                if self.date_order.dateTime() < self.deadline.dateTime():
-                    with open("resources/client.csv", "a", newline="") as file:
-                        writer = csv.writer(file)
-                        writer.writerow([self.date_order.text(), self.deadline.text(), self.info_client.text(),
-                                         self.lumber.text(), self.quantity_lumber.text(),
-                                         self.note.text(), status])
+                # try:
+                #     quantity_lumber = int(quantity_lumber_str)
+                # except ValueError:
+                #     QMessageBox.warning(self, "Ошибка", "Некорректное количество пиломатериала")
+                #     return
 
-                    self.info_client.clear()
-                    self.lumber.clear()
-                    self.quantity_lumber.clear()
-                    self.note.clear()
-                    QMessageBox.information(self, "Успех", "Заказ добавлен")
+            if date_order >= deadline:
+                QMessageBox.warning(self, "Ошибка", "Срок заказа должен быть позже даты заказа")
+                return
 
-                    # Обновляем таблицу клиентов
-                    self.commercial_page.update_list(self.path)
-                    self.production_page.update_list(self.path)
-                else:
-                    QMessageBox.warning(self, "Ошибка", "Дата введенна некоректно")
-            else:
-                QMessageBox.warning(self, "Ошибка", "Введены не все обязательные данные ")
-        else:
-            if self.date_order.dateTime() < self.deadline.dateTime():
-                with open("resources/client.csv", "a", newline="") as file:
-                    writer = csv.writer(file)
-                    writer.writerow([self.date_order.text(), self.deadline.text(), self.info_client.text(),
-                                     self.lumber.text(), self.quantity_lumber.text(), self.note.text(), status])
 
-                self.info_client.clear()
-                self.lumber.clear()
-                self.quantity_lumber.clear()
-                self.note.clear()
-                QMessageBox.information(self, "Успех", "Заказ добавлен")
+            new_order = Orders(OrderRegistrationDate=date_order,
+                               OrderCompletionDate=deadline,
+                               ClientID=client,
+                               WoodProductID=lumber,  # Use the ID from the database
+                               WoodProductQuantity=quantity_lumber,
+                               AdditionalOrderInformation=note,
+                               OrderStatus=status)
 
-                self.commercial_page.update_list(self.path)
-                self.production_page.update_list(self.path)
-            else:
-                QMessageBox.warning(self, "Ошибка", "Дата введенна некоректно")
+            self.session.add(new_order)
+            self.session.commit()
+            QMessageBox.information(self, "Success", "Order added successfully!")
+
+
+        except exc.SQLAlchemyError as e:
+            self.session.rollback()  # Rollback transaction on error
+            QMessageBox.critical(self, "Database Error", f"Database error: {e}")
+            logging.exception(f"Database error: {e}")  # Log the error for debugging
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"An unexpected error occurred: {e}")
+            logging.exception(f"An unexpected error occurred: {e}")
+
+
+
+
 
 
 
