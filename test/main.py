@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import QMainWindow, QStackedWidget
 from Pages.Client import Client
 from Pages.Lumber import Lumber
 from Pages.Order import Order
+from Pages.PreparationTasks import PreparationTasks
 from Pages.ProductionTask import ProductionTask
 from Pages.Commercial import CommercialPage
 from Pages.home import MainPage
@@ -41,12 +42,13 @@ class MainWindow(QMainWindow):
         self.commercial_page = CommercialPage(self.show_lumber_input_page, self.show_client_page, self.show_order_page,
                                               self.show_main_page)
         self.production_page = ProductionPage(self.show_lumber_input_page, self.show_order_page, self.show_main_page)
-        self.technology_page = TechnologyPage(self.show_lumber_input_page, self.show_page, self.show_main_page)
+        self.technology_page = TechnologyPage(self.show_lumber_input_page, self.show_page, self.show_PreparationTasks_page, self.show_main_page)
         self.lumber_input_page = Lumber(self.show_last_page, self.commercial_page, self.production_page,
                                               self.technology_page)
         self.client_page = Client(self.show_last_page, self.commercial_page)
         self.productionTask_page = ProductionTask(self.show_last_page)
         self.order_page = Order(self.show_last_page)
+        self.PreparationTasks_page = PreparationTasks(self.show_last_page)
 
         self.stacked_widget.addWidget(self.main_page)
         self.stacked_widget.addWidget(self.commercial_page)
@@ -56,6 +58,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.client_page)
         self.stacked_widget.addWidget(self.order_page)
         self.stacked_widget.addWidget(self.productionTask_page)
+        self.stacked_widget.addWidget(self.PreparationTasks_page)
 
     # Методы для навигации
     def show_last_page(self):
@@ -89,6 +92,10 @@ class MainWindow(QMainWindow):
     def show_page(self):
         self.last_page = self.stacked_widget.currentWidget()
         self.stacked_widget.setCurrentWidget(self.productionTask_page)
+
+    def show_PreparationTasks_page(self):
+        self.last_page = self.stacked_widget.currentWidget()
+        self.stacked_widget.setCurrentWidget(self.PreparationTasks_page)
 
 
 if __name__ == "__main__":

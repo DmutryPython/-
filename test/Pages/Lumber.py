@@ -34,14 +34,13 @@ class Lumber(QWidget):
         self.lumber_input.setPlaceholderText("вид")
 
         save_button = QPushButton("Сохранить")
-        save_button.clicked.connect(self.save_lumber_to_csv)
+        save_button.clicked.connect(self.save_lumber)
 
         self.time_prod = QLineEdit()
         self.time_prod.setValidator(QIntValidator())
         self.time_prod.setPlaceholderText("время производства")
 
         self.workshop = QLineEdit()
-        self.workshop.setValidator(QIntValidator())
         self.workshop.setPlaceholderText("workshop")
 
         back_button = QPushButton("Назад")
@@ -57,21 +56,24 @@ class Lumber(QWidget):
 
         self.setLayout(layout)
 
-    def save_lumber_to_csv(self):
-        lumber_type = self.lumber_input.text()
-        time_prod = self.time_prod.text()
-        workshop = self.workshop.text()
-        if lumber_type:
-            new_order = WoodProducts(
-                WoodProductName=lumber_type,
-                ProductionTime=time_prod,
-                ProductionShopID=workshop
-            )
+    def save_lumber(self):
+        try:
+            lumber_type = self.lumber_input.text()
+            time_prod = self.time_prod.text()
+            workshop = self.workshop.text()
+            if lumber_type:
+                new_order = WoodProducts(
+                    WoodProductName=lumber_type,
+                    ProductionTime=time_prod,
+                    ProductionShopName=workshop
+                )
 
-            self.session.add(new_order)
-            self.session.commit()
-            QMessageBox.information(self, "Success", "Order added successfully!")
+                self.session.add(new_order)
+                self.session.commit()
+                QMessageBox.information(self, "Success", "Order added successfully!")
 
 
-        else:
-            QMessageBox.warning(self, "Ошибка", "Введите вид древесины для сохранения.")
+            else:
+                QMessageBox.warning(self, "Ошибка", "Введите вид древесины для сохранения.")
+        except sa.exc.IntegrityError as e:
+            QMessageBox.warning(self, "Ошибка", "Ошибка: Значение уже существует.")

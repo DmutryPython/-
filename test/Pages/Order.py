@@ -89,8 +89,8 @@ class Order(QWidget):
 
             new_order = Orders(OrderRegistrationDate=date_order,
                                OrderCompletionDate=deadline,
-                               ClientID=client,
-                               WoodProductID=lumber,  # Use the ID from the database
+                               ClientName=client,
+                               WoodProductName=lumber,  # Use the ID from the database
                                WoodProductQuantity=quantity_lumber,
                                AdditionalOrderInformation=note,
                                OrderStatus=status)
@@ -119,9 +119,8 @@ class Order(QWidget):
         self.tab = table_input()
         self.session = self.tab.session
         # Удаляем старый ComboBox
-        if self.lumber:
-            self.layout().removeWidget(self.lumber)
-            self.lumber.deleteLater()
+        self.layout().removeWidget(self.lumber)
+        self.lumber.deleteLater()
 
         # Создаем новый ComboBox и добавляем его в layout
         self.lumber = QComboBox(self)
