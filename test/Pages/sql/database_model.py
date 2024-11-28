@@ -26,10 +26,9 @@ class WoodProducts(Base):
     __tablename__ = 'wood_products'
     WoodProductName = sa.Column(sa.String(255), primary_key=True)
     ProductionTime = sa.Column(sa.Integer)
-    ProductionShopName = sa.Column(sa.String(255)) #, sa.ForeignKey('production_shops.ShopID'))
+    ProductionShopName = sa.Column(sa.String(255), sa.ForeignKey('production_shops.ShopID'))
 
-    # production_tasks = relationship("ProductionTasks", back_populates="wood_product")
-    # production_shop = relationship("ProductionShops", back_populates="wood_products")
+    production_shop = relationship("ProductionShops", backref="productionShop", lazy="joined")
 
 
 class ProductionTasks(Base):
@@ -72,21 +71,18 @@ class PreparationTasks(Base):
 class ProductionShops(Base):
     __tablename__ = 'production_shops'
     ShopID = sa.Column(sa.Integer, primary_key=True)
-    ShopName = sa.Column(sa.String(255))
-
-    # wood_products = relationship("WoodProducts", back_populates="production_shop") #back_populates corrected
-    # production_tasks = relationship("ProductionTasks", back_populates="shop")
-    # shop_sections = relationship("ShopSections", back_populates="shop")
+    ShopName = sa.Column(sa.String(255), unique=True)
 
 
 class ShopSections(Base): # Added ShopSections class
     __tablename__ = 'shop_sections'
     ShopSectionID = sa.Column(sa.Integer, primary_key=True)
-    ShopSectionName = sa.Column(sa.String(255))
+    ShopSectionName = sa.Column(sa.String(255), unique=True)
     ShopName = sa.Column(sa.String, sa.ForeignKey('production_shops.ShopName'))
+    SectionParam = sa.Column(sa.String(255))
 
     # preparation_tasks = relationship("PreparationTasks", back_populates="shop_section")
-    # shop = relationship("ProductionShops", back_populates="shop_sections")
+    shop = relationship("ProductionShops", backref="shopName", lazy="joined")
 
 
 class clienttab(Base):
@@ -96,17 +92,7 @@ class clienttab(Base):
     ClientInfo = sa.Column(sa.String(255))
 
 
-# @listens_for(ProductionTasks, 'before_insert')
-# def receive_before_insert_production_task(mapper, connection, target):
-#     session = sessionmaker(bind=connection)()
-#     order = session.query(Orders).get(target.OrderID)
-#     woodprod = session.query(WoodProducts).get(target.WoodProductName)
-#     if order:
-#         target.wood_type = order.WoodProduct
-#         target.quantity = order.WoodProductQuantity
-#     if woodprod:
-#         target.workshop = woodprod.ProductionShopName
-#     session.close()
+
 
 
 

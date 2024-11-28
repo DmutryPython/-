@@ -115,7 +115,7 @@ class Order(QWidget):
         super().showEvent(event)
 
     def update_tables(self):
-        index = self.layout().indexOf(self.quantity_lumber)  # Находим индекс quantity_lumber
+        index = self.layout().indexOf(self.lumber)  # Находим индекс quantity_lumber
         self.tab = table_input()
         self.session = self.tab.session
         # Удаляем старый ComboBox

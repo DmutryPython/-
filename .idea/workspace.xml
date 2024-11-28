@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="3.1 not work">
-      <change afterPath="$PROJECT_DIR$/test/Pages/PreparationTasks.py" afterDir="false" />
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="3.2 not full work">
+      <change afterPath="$PROJECT_DIR$/test/Pages/ProductionShop.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/Pages/ShopSection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Lumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Lumber.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Order.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionTask.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/ProductionTask.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Technology.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/sql/database_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/sql/database_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/sql/wood_production.db" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/sql/wood_production.db" afterDir="false" />
@@ -165,7 +165,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732657141462</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="3.2 not full work">
+      <option name="closed" value="true" />
+      <created>1732832475005</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732832475005</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -184,7 +192,8 @@
     <MESSAGE value="2" />
     <MESSAGE value="3" />
     <MESSAGE value="3.1 not work" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.1 not work" />
+    <MESSAGE value="3.2 not full work" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.2 not full work" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
