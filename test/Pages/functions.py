@@ -1,6 +1,6 @@
 import csv
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox,
-                             QStackedWidget, QTableWidget, QTableWidgetItem, QStyledItemDelegate)
+                             QStackedWidget, QTableWidget, QTableWidgetItem, QStyledItemDelegate, QComboBox)
 from PyQt6.QtCore import QAbstractTableModel, Qt
 
 from PyQt6.QtGui import QColor
@@ -121,4 +121,19 @@ class table_input():
         self.result_client = result_client
         self.result_order = result_order
 
+
+def update_tables(self, nametab, column, obj):
+    index = self.layout().indexOf(obj)  # Находим индекс quantity_lumber
+    self.tab = table_input()
+    self.session = self.tab.session
+
+    self.layout().removeWidget(obj)
+
+    obj.clear()
+    lt = map(str, self.session.execute(sa.select(sa.column(column)).select_from(sa.table(nametab))).scalars().all())
+    obj.addItems(lt)
+    self.layout().insertWidget(index, obj)
+
+    self.layout().update()
+    self.update()
 

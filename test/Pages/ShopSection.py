@@ -15,7 +15,7 @@ import sqlalchemy as sa
 
 db_path = os.path.join("Pages", "sql", "wood_production.db")
 absolute_path = os.path.abspath(db_path)
-from .functions import table_input
+from .functions import table_input, update_tables
 
 
 class ShopSection(QWidget):
@@ -70,6 +70,7 @@ class ShopSection(QWidget):
             else:
                 QMessageBox.warning(self, "Ошибка", "Введите наименование цеха")
         except sa.exc.IntegrityError as e:
+            self.session.rollback()
             QMessageBox.warning(self, "Ошибка", "Ошибка: Значение уже существует.")
 
     def showEvent(self, event):
@@ -78,20 +79,4 @@ class ShopSection(QWidget):
         super().showEvent(event)
 
     def update_tables(self):
-        index = self.layout().indexOf(self.production_shop)  # Находим индекс quantity_lumber
-        self.tab = table_input()
-        self.session = self.tab.session
-        # Удаляем старый ComboBox
-        self.layout().removeWidget(self.production_shop)
-        self.production_shop.deleteLater()
-
-        # Создаем новый ComboBox и добавляем его в layout
-        self.production_shop = QComboBox(self)
-        self.production_shop_list = self.session.execute(sa.select(sa.column('ShopName')).
-                                                         select_from(sa.table('production_shops'))).scalars().all()
-        self.production_shop.addItems(self.production_shop_list)
-        self.layout().insertWidget(index, self.production_shop) # Добавляем в layout
-
-        # Обновляем layout, чтобы изменения отобразились
-        self.layout().update()
-        self.update()
+        update_tables(self, 'production_shops', 'ShopName', self.production_shop)

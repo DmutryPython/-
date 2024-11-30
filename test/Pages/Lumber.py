@@ -11,11 +11,11 @@ import logging
 from .sql.database_model import WoodProducts
 import os
 import sqlalchemy as sa
+from .functions import table_input, update_tables
 
 
 db_path = os.path.join("Pages", "sql", "wood_production.db")
 absolute_path = os.path.abspath(db_path)
-from .functions import table_input
 
 
 class Lumber(QWidget):
@@ -36,8 +36,10 @@ class Lumber(QWidget):
         self.time_prod.setValidator(QIntValidator())
         self.time_prod.setPlaceholderText("время производства")
 
-        self.workshop = QLineEdit()
-        self.workshop.setPlaceholderText("workshop")
+        self.workshop = QComboBox(self)
+        self.workshop_list = self.session.execute(sa.select(sa.column('ShopSectionName')).
+                                                select_from(sa.table('shop_sections'))).scalars().all()
+        self.workshop.addItems(self.workshop_list)
 
         back_button = QPushButton("Назад")
         back_button.clicked.connect(navigate_back)
@@ -56,7 +58,7 @@ class Lumber(QWidget):
         try:
             lumber_type = self.lumber_input.text()
             time_prod = self.time_prod.text()
-            workshop = self.workshop.text()
+            workshop = self.workshop.currentText()
             if lumber_type:
                 new_order = WoodProducts(
                     WoodProductName=lumber_type,
@@ -72,4 +74,13 @@ class Lumber(QWidget):
             else:
                 QMessageBox.warning(self, "Ошибка", "Введите вид древесины для сохранения.")
         except sa.exc.IntegrityError as e:
+            self.session.rollback()
             QMessageBox.warning(self, "Ошибка", "Ошибка: Значение уже существует.")
+
+    def showEvent(self, event):
+        """Вызывается каждый раз, когда виджет становится видимым."""
+        self.update_Shop()
+        super().showEvent(event)
+
+    def update_Shop(self):
+        update_tables(self, 'shop_sections', 'ShopSectionName', self.workshop)

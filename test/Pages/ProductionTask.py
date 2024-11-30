@@ -4,8 +4,8 @@ from PyQt6.QtGui import QIntValidator # Здесь импортируется QI
 from sqlalchemy import *
 from sqlalchemy.orm import *
 import logging
-from .functions import table_input
-from .sql.database_model import ProductionTasks
+from .functions import table_input, update_tables
+from .sql.database_model import ProductionTasks, Orders
 
 
 
@@ -39,9 +39,13 @@ class ProductionTask(QWidget):
         self.workshop.addItems(self.shopname)
 
         self.order_id = QComboBox(self)
-        self.orders = self.session.execute(select(column('OrderID')).
-                                             select_from(table('orders'))).scalars().all()
+        self.orders = list(map(str, self.session.execute(select(column('OrderID')).
+                                             select_from(table('orders'))).scalars().all()))
         self.order_id.addItems(self.orders)
+
+        id_str = self.session.get(Orders, int(self.order_id.currentText()))
+        self.quantity = id_str.WoodProductQuantity
+        self.wood_product_type = id_str.WoodProductName
 
         self.additional_info = QLineEdit(self)
         self.additional_info.setPlaceholderText("Дополнительная информация")
@@ -58,10 +62,8 @@ class ProductionTask(QWidget):
         layout.addWidget(self.date_start)
         layout.addWidget(QLabel("Номер заказа:"))
         layout.addWidget(self.order_id)
-        layout.addWidget(QLabel("Вид лесопродукции:"))
-        layout.addWidget(self.wood_product_type)
-        layout.addWidget(QLabel("Количество:"))
-        layout.addWidget(self.quantity)
+        layout.addWidget(QLabel(f"Вид лесопродукции:{self.wood_product_type}"))
+        layout.addWidget(QLabel(f"Количество:{self.quantity}"))
         layout.addWidget(QLabel("Цех:"))
         layout.addWidget(self.workshop)
         layout.addWidget(QLabel("Дополнительная информация:"))
@@ -72,62 +74,34 @@ class ProductionTask(QWidget):
         self.setLayout(layout)
 
     def update_orderid(self):
-        index = self.layout().indexOf(self.order_id)
-        self.layout().removeWidget(self.order_id)
-        self.order_id.deleteLater()
-        self.order_id = QComboBox(self)
-        try:
-            orders = self.session.execute(select(column('OrderID')).select_from(table('orders'))).scalars()
-            self.layout().insertWidget(index, self.order_id)
-            self.order_id.addItems(orders)
-            self.layout().update()
-            self.update()
-        except Exception as e:
-            print(f"Ошибка при выполнении запроса: {e}")
+        update_tables(self, 'orders', 'OrderID', self.order_id)
 
-    def update_wood_product_types(self):
-        index = self.layout().indexOf(self.wood_product_type)
-        self.layout().removeWidget(self.wood_product_type)
-        self.wood_product_type.deleteLater()
-        self.wood_product_type = QComboBox(self)
-        try:
-            wood_product_types = self.session.execute(select(column('WoodProductName')).select_from(table('wood_products'))).scalars()
-            self.layout().insertWidget(index, self.wood_product_type)
-            self.wood_product_type.addItems(wood_product_types)
-            self.layout().update()
-            self.update()
-        except Exception as e:
-            print(f"Ошибка при выполнении запроса: {e}")  # Выводим сообщение об ошибке в консоль
+    # def update_wood_product_types(self):
+    #     update_tables(self, 'wood_products', 'WoodProductName', self.wood_product_type)
 
     def update_workshops(self):
-        index = self.layout().indexOf(self.workshop)
-        self.layout().removeWidget(self.workshop)
-        self.workshop.deleteLater()
-        self.workshop = QComboBox(self)
-        workshops = self.session.execute(select(column('ShopName')).select_from(table('production_shops'))).scalars()
-        self.workshop.addItems(workshops)
-        self.layout().insertWidget(index, self.workshop)
-        self.layout().update()
-        self.update()
-
+        update_tables(self, 'production_shops', 'ShopName', self.workshop)
 
     def showEvent(self, event):
         """Вызывается каждый раз, когда виджет становится видимым."""
         self.update_orderid()
         self.update_workshops()
-        self.update_wood_product_types()
+        # self.update_wood_product_types()
         super().showEvent(event)
+
     def add_task(self):
             try:
                 date_registration = self.date_registration.date().toPyDate()
                 date_start = self.date_start.date().toPyDate()
-                wood_product_type = self.wood_product_type.currentText()
-                quantity = self.quantity.text()
+                wood_product_type = self.wood_product_type
+                quantity = self.quantity
                 workshop = self.workshop.currentText()
                 additional_info = self.additional_info.text()
 
                 # Здесь вам нужно будет добавить логику для получения ID из названий (wood_product_type, workshop)
                 # и создать объект ProductionTasks с соответствующими полями.  Замените на ваши реальные поля и таблицы:
+
+
                 new_task = ProductionTasks(OrderRegistrationDate=date_registration,
                                            OrderStartDate=date_start,
                                            WoodProductID=wood_product_type,  # Нужно получить ID

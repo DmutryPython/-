@@ -10,7 +10,7 @@ from .sql.database_model import Base, Orders, clienttab
 import logging
 import os
 import sqlalchemy as sa
-from .functions import table_input
+from .functions import table_input, update_tables
 
 class Order(QWidget):
     def __init__(self, navigate_back):
@@ -111,24 +111,9 @@ class Order(QWidget):
 
     def showEvent(self, event):
         """Вызывается каждый раз, когда виджет становится видимым."""
-        self.update_tables()
+        self.update_lumber()
         super().showEvent(event)
 
-    def update_tables(self):
-        index = self.layout().indexOf(self.lumber)  # Находим индекс quantity_lumber
-        self.tab = table_input()
-        self.session = self.tab.session
-        # Удаляем старый ComboBox
-        self.layout().removeWidget(self.lumber)
-        self.lumber.deleteLater()
-
-        # Создаем новый ComboBox и добавляем его в layout
-        self.lumber = QComboBox(self)
-        lumber_list = self.session.execute(sa.select(sa.column('WoodProductName')).select_from(sa.table('wood_products'))).scalars().all()
-        self.lumber.addItems(lumber_list)
-        self.layout().insertWidget(index, self.lumber) # Добавляем в layout
-
-        # Обновляем layout, чтобы изменения отобразились
-        self.layout().update()
-        self.update()
+    def update_lumber(self):
+        update_tables(self, 'wood_products', 'WoodProductName', self.lumber)
 

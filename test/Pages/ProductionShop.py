@@ -55,4 +55,5 @@ class ProductionShop(QWidget):
             else:
                 QMessageBox.warning(self, "Ошибка", "Введите наименование цеха")
         except sa.exc.IntegrityError as e:
+            self.session.rollback()
             QMessageBox.warning(self, "Ошибка", "Ошибка: Значение уже существует.")
