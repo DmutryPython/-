@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="3.4 not full work доработка ProductionTask">
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="3.6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/Pages/ProductionTask.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/ProductionTask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/sql/wood_production.db" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/sql/wood_production.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/sql/database_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/sql/database_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732970085899</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="3.6">
+      <option name="closed" value="true" />
+      <created>1733180274920</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733180274920</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -205,7 +213,8 @@
     <MESSAGE value="3.2 not full work" />
     <MESSAGE value="3.3 not full work. добавить rollback в обработчике ошибок" />
     <MESSAGE value="3.4 not full work доработка ProductionTask" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.4 not full work доработка ProductionTask" />
+    <MESSAGE value="3.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

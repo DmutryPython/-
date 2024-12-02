@@ -39,11 +39,12 @@ class ProductionTasks(Base):
 
     OrderID = sa.Column(sa.Integer) #, sa.ForeignKey('orders.OrderID'))
 
+    WoodProductsQuantity = sa.Column(sa.Integer)
+
     WoodProductName = sa.Column(sa.String(255)) #, sa.ForeignKey('wood_products.WoodProductName'))
 
     Shop = sa.Column(sa.String(255)) #, sa.ForeignKey('production_shops.ShopName'))
     AdditionalTaskInformation = sa.Column(sa.Text)
-    TaskStatus = sa.Column(sa.String(255))
 
     # order = relationship("Orders", back_populates="production_tasks")
     # wood_product = relationship("WoodProducts", back_populates="production_tasks")

@@ -28,6 +28,9 @@ class ProductionTask(QWidget):
         self.orders = list(map(str, self.session.execute(select(column('OrderID')).
                                              select_from(table('orders'))).scalars().all()))
         self.order_id.addItems(self.orders)
+        self.quantity = 0
+        self.wood_product_type = ''
+        self.work_shop = ''
 
         self.quantity_label = QLabel("Количество: ")
         self.wood_product_type_label = QLabel("Тип дерева: ")
@@ -70,19 +73,23 @@ class ProductionTask(QWidget):
             print(workshop.ProductionShopName)
 
             if order:
-                quantity_text = f"Количество: {order.WoodProductQuantity}"
-                wood_type_text = f"Тип дерева: {order.WoodProductName}"
+                self.quantity = order.WoodProductQuantity
+                self.wood_product_type = order.WoodProductName
+                quantity_text = f"Количество: {self.quantity}"
+                wood_type_text = f"Тип дерева: {self.wood_product_type}"
             else:
                 quantity_text = "Количество: "
                 wood_type_text = "Тип дерева: "
             if workshop:
-                work_shop_text = f"Цех:  {workshop.ProductionShopName}"
+                self.work_shop = workshop.ProductionShopName
+                work_shop_text = f"Цех:  {self.work_shop}"
             else:
                 work_shop_text = "Цех: "
             self.quantity_label.setText(quantity_text)
             self.wood_product_type_label.setText(wood_type_text)
             self.workshop.setText(work_shop_text)
             self.layout().update()
+            self.update()
 
         except ValueError:
             self.quantity_label.setText("Количество: ")
@@ -90,28 +97,10 @@ class ProductionTask(QWidget):
             self.workshop.setText("Цех: ")
 
 
-    # def box_update(self):
-    #     index_1 = self.layout().indexOf(self.quantity)
-    #     index_2 = self.layout().indexOf(self.wood_product_type)
-    #     id_str = self.session.get(Orders, int(self.order_id.currentText()))
-    #     self.quantity = id_str.WoodProductQuantity
-    #     self.wood_product_type = id_str.WoodProductName
-    #     self.layout().removeWidget(self.quantity)
-    #     self.layout().insertWidget(index_1, self.quantity)
-    #     self.layout().removeWidget(self.wood_product_type)
-    #     self.layout().insertWidget(index_2, self.wood_product_type)
-    #     self.layout().update()
-    #     self.update()
-
 
     def update_orderid(self):
         update_tables(self, 'orders', 'OrderID', self.order_id)
 
-    # def update_wood_product_types(self):
-    #     update_tables(self, 'wood_products', 'WoodProductName', self.wood_product_type)
-
-    # def update_workshops(self):
-    #     update_tables(self, 'production_shops', 'ShopName', self.workshop)
 
     def showEvent(self, event):
         """Вызывается каждый раз, когда виджет становится видимым."""
@@ -124,21 +113,23 @@ class ProductionTask(QWidget):
                 date_registration = self.date_registration.date().toPyDate()
                 date_start = self.date_start.date().toPyDate()
                 wood_product_type = self.wood_product_type
-                quantity = self.quantity
-                workshop = self.workshop.currentText()
+                quantity = int(self.quantity)
+                workshop = self.work_shop
                 additional_info = self.additional_info.text()
+                order_id = self.order_id.currentText()
 
                 # Здесь вам нужно будет добавить логику для получения ID из названий (wood_product_type, workshop)
                 # и создать объект ProductionTasks с соответствующими полями.  Замените на ваши реальные поля и таблицы:
 
 
-                new_task = ProductionTasks(OrderRegistrationDate=date_registration,
-                                           OrderStartDate=date_start,
-                                           WoodProductID=wood_product_type,  # Нужно получить ID
-                                           WoodProductQuantity=quantity,
-                                           WorkshopID=workshop,  # Нужно получить ID
-                                           AdditionalOrderInformation=additional_info,
-                                           OrderID=self.order_id)
+                new_task = ProductionTasks(TaskRegistrationDate=date_registration,
+                                           ProductionStartDate=date_start,
+                                           WoodProductName=wood_product_type,
+                                           WoodProductsQuantity=quantity,
+                                           Shop=workshop,
+                                           AdditionalTaskInformation=additional_info,
+                                           OrderID=order_id
+                                           )
 
                 self.session.add(new_task)
                 self.session.commit()
