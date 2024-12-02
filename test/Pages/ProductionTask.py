@@ -5,7 +5,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 import logging
 from .functions import table_input, update_tables
-from .sql.database_model import ProductionTasks, Orders
+from .sql.database_model import ProductionTasks, Orders, WoodProducts
 
 
 
@@ -24,28 +24,14 @@ class ProductionTask(QWidget):
         self.date_start = QDateEdit(self)
         self.date_start.setDate(QDate.currentDate())
 
-        self.wood_product_type = QComboBox(self)
-        self.wood_product_types = self.session.execute(select(column('WoodProductName')).
-                                                select_from(table('wood_products'))).scalars().all()
-        self.wood_product_type.addItems(self.wood_product_types)
-
-        self.quantity = QLineEdit(self)
-        self.quantity.setValidator(QIntValidator())
-        self.quantity.setPlaceholderText("Количество")
-
-        self.workshop = QComboBox(self)
-        self.shopname = self.session.execute(select(column('ShopName')).
-                                                       select_from(table('production_shops'))).scalars().all()
-        self.workshop.addItems(self.shopname)
-
         self.order_id = QComboBox(self)
         self.orders = list(map(str, self.session.execute(select(column('OrderID')).
                                              select_from(table('orders'))).scalars().all()))
         self.order_id.addItems(self.orders)
 
-        id_str = self.session.get(Orders, int(self.order_id.currentText()))
-        self.quantity = id_str.WoodProductQuantity
-        self.wood_product_type = id_str.WoodProductName
+        self.quantity_label = QLabel("Количество: ")
+        self.wood_product_type_label = QLabel("Тип дерева: ")
+        self.workshop = QLabel("Цех: ")
 
         self.additional_info = QLineEdit(self)
         self.additional_info.setPlaceholderText("Дополнительная информация")
@@ -62,9 +48,8 @@ class ProductionTask(QWidget):
         layout.addWidget(self.date_start)
         layout.addWidget(QLabel("Номер заказа:"))
         layout.addWidget(self.order_id)
-        layout.addWidget(QLabel(f"Вид лесопродукции:{self.wood_product_type}"))
-        layout.addWidget(QLabel(f"Количество:{self.quantity}"))
-        layout.addWidget(QLabel("Цех:"))
+        layout.addWidget(self.quantity_label)
+        layout.addWidget(self.wood_product_type_label)
         layout.addWidget(self.workshop)
         layout.addWidget(QLabel("Дополнительная информация:"))
         layout.addWidget(self.additional_info)
@@ -72,6 +57,52 @@ class ProductionTask(QWidget):
         layout.addWidget(back_button)
 
         self.setLayout(layout)
+        self.order_id.currentTextChanged.connect(self.box_update)
+        self.box_update(self.order_id.currentText())
+
+    def box_update(self, text):
+        try:
+            order_id = int(text)
+            order = self.session.get(Orders, order_id)
+            shopName = order.WoodProductName
+            print(shopName)
+            workshop = self.session.get(WoodProducts, shopName)
+            print(workshop.ProductionShopName)
+
+            if order:
+                quantity_text = f"Количество: {order.WoodProductQuantity}"
+                wood_type_text = f"Тип дерева: {order.WoodProductName}"
+            else:
+                quantity_text = "Количество: "
+                wood_type_text = "Тип дерева: "
+            if workshop:
+                work_shop_text = f"Цех:  {workshop.ProductionShopName}"
+            else:
+                work_shop_text = "Цех: "
+            self.quantity_label.setText(quantity_text)
+            self.wood_product_type_label.setText(wood_type_text)
+            self.workshop.setText(work_shop_text)
+            self.layout().update()
+
+        except ValueError:
+            self.quantity_label.setText("Количество: ")
+            self.wood_product_type_label.setText("Тип дерева: ")
+            self.workshop.setText("Цех: ")
+
+
+    # def box_update(self):
+    #     index_1 = self.layout().indexOf(self.quantity)
+    #     index_2 = self.layout().indexOf(self.wood_product_type)
+    #     id_str = self.session.get(Orders, int(self.order_id.currentText()))
+    #     self.quantity = id_str.WoodProductQuantity
+    #     self.wood_product_type = id_str.WoodProductName
+    #     self.layout().removeWidget(self.quantity)
+    #     self.layout().insertWidget(index_1, self.quantity)
+    #     self.layout().removeWidget(self.wood_product_type)
+    #     self.layout().insertWidget(index_2, self.wood_product_type)
+    #     self.layout().update()
+    #     self.update()
+
 
     def update_orderid(self):
         update_tables(self, 'orders', 'OrderID', self.order_id)
@@ -79,13 +110,12 @@ class ProductionTask(QWidget):
     # def update_wood_product_types(self):
     #     update_tables(self, 'wood_products', 'WoodProductName', self.wood_product_type)
 
-    def update_workshops(self):
-        update_tables(self, 'production_shops', 'ShopName', self.workshop)
+    # def update_workshops(self):
+    #     update_tables(self, 'production_shops', 'ShopName', self.workshop)
 
     def showEvent(self, event):
         """Вызывается каждый раз, когда виджет становится видимым."""
         self.update_orderid()
-        self.update_workshops()
         # self.update_wood_product_types()
         super().showEvent(event)
 
