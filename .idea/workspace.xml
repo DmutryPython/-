@@ -4,24 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="3.7">
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="4.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Lumber.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Lumber.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/PreparationTasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/PreparationTasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Production.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Production.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionShop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/ProductionShop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionTask.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/ProductionTask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ShopSection.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/ShopSection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/Technology.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/sql/database_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/Pages/sql/database_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/sql/wood_production.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/pages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resources/client.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resources/lumber_types.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/resources/name.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Commercial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Lumber.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Order.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/PreparationTasks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Production.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionShop.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionTask.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/ShopSection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/functions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/home.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/sql/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Pages/sql/database_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,11 +68,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages\db" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages\func" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test" />
-      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\resources" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main (1)">
@@ -83,11 +85,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -118,10 +120,33 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Лесозавод (нто)" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="D:\Програмирование\pycharmproject\Лесозавод (нто)\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -213,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733181698471</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="4.0">
+      <option name="closed" value="true" />
+      <created>1733334193954</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733334193954</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -237,18 +270,15 @@
     <MESSAGE value="3.4 not full work доработка ProductionTask" />
     <MESSAGE value="3.6" />
     <MESSAGE value="3.7" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.7" />
+    <MESSAGE value="4.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="4.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test/pages.py</url>
+          <url>file://$PROJECT_DIR$/pages.py</url>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test/Pages/Technology.py</url>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
