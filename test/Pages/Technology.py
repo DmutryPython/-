@@ -1,4 +1,4 @@
-from .functions import PandasModel, table_input, ConditionalColorDelegate
+from .functions import PandasModel, table_input, ConditionalColorDelegate, DictTableModel
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QTableView
 
 class TechnologyPage(QWidget):
@@ -8,6 +8,8 @@ class TechnologyPage(QWidget):
 
         self.tab = table_input()
         result_lumber = self.tab.result_lumber
+        result_preparation = self.tab.result_preparation_task
+        result_shopSelection = self.tab.shop_section_list
 
         label_description = QLabel("Служба технолога")
 
@@ -35,6 +37,14 @@ class TechnologyPage(QWidget):
         self.model_lumber = PandasModel(result_lumber)
         self.table_lumber.setModel(self.model_lumber)
 
+        self.table_preparation = QTableView()
+        self.model_preparation = PandasModel(result_preparation)
+        self.table_preparation.setModel(self.model_preparation)
+
+        self.table_shopSelection = QTableView()
+        self.model_shopSelection = DictTableModel(result_shopSelection)
+        self.table_shopSelection.setModel(self.model_shopSelection)
+
         # Добавляем виджеты в компоновку
         layout = QVBoxLayout()
         layout.addWidget(label_description)
@@ -44,7 +54,12 @@ class TechnologyPage(QWidget):
         layout.addWidget(button_ProductionShop)
         layout.addWidget(button_ShopSection)
         layout.addWidget(back_button)
-        layout.addWidget(self.table_lumber)  # Добавляем таблицу на страницу
+        layout.addWidget(QLabel("Таблица цехов"))
+        layout.addWidget(self.table_shopSelection)
+        layout.addWidget(QLabel("Таблица древесины"))
+        layout.addWidget(self.table_lumber)
+        layout.addWidget(QLabel("Таблица задач на остнастку"))
+        layout.addWidget(self.table_preparation)
 
         self.setLayout(layout)
 

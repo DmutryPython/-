@@ -5,10 +5,10 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 import logging
 from .functions import table_input, update_tables
-from .sql.database_model import ProductionTasks
+from .sql.database_model import PreparationTasks
 
 
-class PreparationTasks(QWidget):
+class PreparationTask(QWidget):
     def __init__(self, navigate_back):
         super().__init__()
 
@@ -24,13 +24,13 @@ class PreparationTasks(QWidget):
         self.date_start.setDate(QDate.currentDate())
 
         self.productionTask_id = QComboBox(self)
-        self.productionTasks = self.session.execute(select(column('ProductionTaskID')).
-                                                    select_from(table('production_tasks'))).scalars().all()
+        self.productionTasks = map(str, self.session.execute(select(column('ProductionTaskID')).
+                                                    select_from(table('production_tasks'))).scalars().all())
         self.productionTask_id.addItems(self.productionTasks)
 
         self.workshop = QComboBox(self)
-        self.shopname = self.session.execute(select(column('ShopName')).
-                                             select_from(table('production_shops'))).scalars().all()
+        self.shopname = self.session.execute(select(column('ShopSectionName')).
+                                             select_from(table('shop_sections'))).scalars().all()
         self.workshop.addItems(self.shopname)
 
         self.additional_info = QLineEdit(self)
@@ -82,12 +82,14 @@ class PreparationTasks(QWidget):
             date_start = self.date_start.date().toPyDate()
             workshop = self.workshop.currentText()
             productiontaskid = self.productionTask_id.currentText()
+            info = self.additional_info.text()
             status = self.status.currentText()
 
-            new_task = ProductionTasks(TaskRegistrationDate=date_registration,
-                                       ProductionStartDate=date_start,
+            new_task = PreparationTasks(TaskRegistrationDate=date_registration,
+                                       ShopSectionCompletionDate=date_start,
                                        ProductionTaskID=productiontaskid,
                                        Shop=workshop,
+                                       TaskInfo=info,
                                        TaskStatus=status)
 
             self.session.add(new_task)

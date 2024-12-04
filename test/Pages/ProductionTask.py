@@ -1,6 +1,5 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
-from PyQt6.QtGui import QIntValidator # Здесь импортируется QIntValidator
 from sqlalchemy import *
 from sqlalchemy.orm import *
 import logging

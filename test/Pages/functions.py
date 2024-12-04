@@ -1,13 +1,14 @@
 import csv
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox,
                              QStackedWidget, QTableWidget, QTableWidgetItem, QStyledItemDelegate, QComboBox)
-from PyQt6.QtCore import QAbstractTableModel, Qt
+from PyQt6.QtCore import QAbstractTableModel, Qt, QModelIndex
 
 from PyQt6.QtGui import QColor
 
 import os
 import sqlalchemy as sa
 from sqlalchemy.orm import sessionmaker
+from .sql.database_model import ShopSections, ProductionShops
 
 
 
@@ -110,16 +111,53 @@ class table_input():
             result_order = []
 
         try:
-            query_order = sa.text("SELECT * FROM orders")
-            result_order = session.execute(query_order).mappings().all()
+            query_product_task = sa.text("SELECT * FROM production_tasks")
+            result_product_task = session.execute(query_product_task).mappings().all()
+        except:
+            result_product_task = []
+
+        try:
+            query_preparation_task = sa.text("SELECT * FROM preparation_tasks")
+            result_preparation_task = session.execute(query_preparation_task).mappings().all()
+        except:
+            result_preparation_task = []
+
+        try:
+            query_shop = sa.text("SELECT * FROM production_shops")
+            result_production_shop = session.execute(query_shop).mappings().all()
+        except:
+            result_production_shop = []
+
+        try:
+            query_shop_section = sa.text("SELECT * FROM shop_sections")
+            result_shop_section = session.execute(query_shop_section).mappings().all()
+        except:
+            result_shop_section = []
+
+        try:
+            query_shop_list = sa.text("SELECT ShopName FROM production_shops")
+            shop_list = session.execute(query_shop_list).mappings().all()
+            shop_section_list = {}
+            for i in shop_list:
+                k = i['ShopName']
+                el = session.query(ShopSections).filter(ShopSections.ShopName == k).all()
+                string_el = [str(item.ShopSectionName) for item in el]
+                shop_section_list[k] = string_el
 
         except sa.exc.OperationalError as e:
-            result_order = []
+            shop_section_list = {}
+            print(e)
 
         self.session = Session()
         self.result_lumber = result_lumber
         self.result_client = result_client
         self.result_order = result_order
+        self.result_product_task = result_product_task
+        self.result_preparation_task = result_preparation_task
+        self.result_production_shop = result_production_shop
+        self.result_shop_section = result_shop_section
+        self.shop_section_list = shop_section_list
+
 
 
 def update_tables(self, nametab, column, obj):
@@ -136,4 +174,62 @@ def update_tables(self, nametab, column, obj):
 
     self.layout().update()
     self.update()
+
+
+class DictTableModel(QAbstractTableModel):
+    def __init__(self, data):
+        super().__init__()
+        self._data = self._transform_data(data) #Data transformation happens here
+        self.headers = self._data[0] if self._data else []
+        self.rows = self._data[1:] if self._data else []
+
+    def _transform_data(self, data):
+        if not data:
+            return []
+
+        headers = list(data.keys())
+        max_len = max(len(v) for v in data.values() if v) if data else 0
+        rows = []
+        for i in range(max_len):
+            row = []
+            for header in headers:
+                if data.get(header):
+                    try:
+                        row.append(data[header][i])
+                    except IndexError:
+                        row.append("")
+                else:
+                    row.append("")
+            rows.append(row)
+        return [headers] + rows
+
+
+    def rowCount(self, parent=QModelIndex()):
+        return len(self.rows)
+
+    def columnCount(self, parent=QModelIndex()):
+        return len(self.headers) if self.headers else 0
+
+    def data(self, index, role=Qt.ItemDataRole.DisplayRole):
+        if role == Qt.ItemDataRole.DisplayRole:
+            row = index.row()
+            col = index.column()
+            if 0 <= row < len(self.rows) and 0 <= col < len(self.headers):
+                return str(self.rows[row][col])
+            else:
+                return ""
+
+    def headerData(self, section, orientation, role=Qt.ItemDataRole.DisplayRole):
+        if role == Qt.ItemDataRole.DisplayRole:
+            if orientation == Qt.Orientation.Horizontal:
+                return self.headers[section]
+            else:
+                return str(section + 1)
+
+    def headerData(self, section, orientation, role=Qt.ItemDataRole.DisplayRole):
+        if role == Qt.ItemDataRole.DisplayRole:
+            if orientation == Qt.Orientation.Horizontal:
+                return self.headers[section]
+            else:
+                return str(section + 1)
 

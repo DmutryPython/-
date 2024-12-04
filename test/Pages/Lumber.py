@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (QDateEdit, QComboBox, QWidget, QLabel, QLineEdit,
-                             QPushButton, QVBoxLayout, QMessageBox)
+                             QPushButton, QVBoxLayout, QMessageBox, QTableView)
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import QDate
 import csv
@@ -11,19 +11,23 @@ import logging
 from .sql.database_model import WoodProducts
 import os
 import sqlalchemy as sa
-from .functions import table_input, update_tables
+from .functions import table_input, update_tables, PandasModel
+import sys
 
 
-db_path = os.path.join("Pages", "sql", "wood_production.db")
-absolute_path = os.path.abspath(db_path)
 
 
 class Lumber(QWidget):
     def __init__(self, navigate_back):
         super().__init__()
 
-        tab = table_input()
-        self.session = tab.session
+        self.tab = table_input()
+        self.session = self.tab.session
+
+        result_lumber = self.tab.result_lumber
+        self.table_lumber = QTableView()
+        self.model_lumber = PandasModel(result_lumber)
+        self.table_lumber.setModel(self.model_lumber)
 
         label_text = QLabel("Введите вид древесины:")
         self.lumber_input = QLineEdit()
@@ -45,6 +49,7 @@ class Lumber(QWidget):
         back_button.clicked.connect(navigate_back)
 
         layout = QVBoxLayout()
+        layout.addWidget(self.table_lumber)
         layout.addWidget(label_text)
         layout.addWidget(self.lumber_input)
         layout.addWidget(self.time_prod)
@@ -80,7 +85,15 @@ class Lumber(QWidget):
     def showEvent(self, event):
         """Вызывается каждый раз, когда виджет становится видимым."""
         self.update_Shop()
+        self.update_tables()
         super().showEvent(event)
 
     def update_Shop(self):
         update_tables(self, 'shop_sections', 'ShopSectionName', self.workshop)
+
+    def update_tables(self):
+        self.tab = table_input()
+        result_lumber = self.tab.result_lumber
+
+        self.model_lumber = PandasModel(result_lumber)
+        self.table_lumber.setModel(self.model_lumber)

@@ -13,8 +13,7 @@ import os
 import sqlalchemy as sa
 
 
-db_path = os.path.join("Pages", "sql", "wood_production.db")
-absolute_path = os.path.abspath(db_path)
+
 from .functions import table_input
 
 

@@ -37,19 +37,18 @@ class ProductionTasks(Base):
     TaskRegistrationDate = sa.Column(sa.Date)
     ProductionStartDate = sa.Column(sa.Date)
 
-    OrderID = sa.Column(sa.Integer) #, sa.ForeignKey('orders.OrderID'))
+    OrderID = sa.Column(sa.Integer, sa.ForeignKey('orders.OrderID'))
 
     WoodProductsQuantity = sa.Column(sa.Integer)
 
-    WoodProductName = sa.Column(sa.String(255)) #, sa.ForeignKey('wood_products.WoodProductName'))
+    WoodProductName = sa.Column(sa.String(255), sa.ForeignKey('wood_products.WoodProductName'))
 
-    Shop = sa.Column(sa.String(255)) #, sa.ForeignKey('production_shops.ShopName'))
+    Shop = sa.Column(sa.String(255), sa.ForeignKey('production_shops.ShopName'))
     AdditionalTaskInformation = sa.Column(sa.Text)
 
-    # order = relationship("Orders", back_populates="production_tasks")
-    # wood_product = relationship("WoodProducts", back_populates="production_tasks")
-    # shop = relationship("ProductionShops", back_populates="production_tasks")
-    # preparation_tasks = relationship("PreparationTasks", back_populates="production_task")
+    order = relationship("Orders", backref="order", lazy="joined")
+    wood_product = relationship("WoodProducts",  backref="wood", lazy="joined")
+    shop = relationship("ProductionShops", backref="shop_name", lazy="joined")
 
 
 class PreparationTasks(Base):
@@ -58,15 +57,15 @@ class PreparationTasks(Base):
     TaskRegistrationDate = sa.Column(sa.Date)
     ShopSectionCompletionDate = sa.Column(sa.Date)
 
-    ProductionTaskID = sa.Column(sa.Integer) #, sa.ForeignKey('production_tasks.ProductionTaskID'))
+    ProductionTaskID = sa.Column(sa.Integer, sa.ForeignKey('production_tasks.ProductionTaskID'))
 
-    Shop = sa.Column(sa.String(255)) #, sa.ForeignKey('shop_sections.ShopSectionName'))
-
+    Shop = sa.Column(sa.String(255), sa.ForeignKey('shop_sections.ShopSectionName'))
+    TaskInfo = sa.Column(sa.String(255))
     TaskStatus = sa.Column(sa.String(255))
 
 
-    # production_task = relationship("ProductionTasks", back_populates="preparation_tasks")
-    # shop_section = relationship("ShopSections", back_populates="preparation_tasks")
+    production_task = relationship("ProductionTasks", backref="task", lazy="joined")
+    shop_section = relationship("ShopSections", backref="section", lazy="joined")
 
 
 class ProductionShops(Base):
@@ -77,13 +76,13 @@ class ProductionShops(Base):
 
 class ShopSections(Base): # Added ShopSections class
     __tablename__ = 'shop_sections'
-    ShopSectionID = sa.Column(sa.Integer, primary_key=True)
-    ShopSectionName = sa.Column(sa.String(255), unique=True)
+    ShopSectionName = sa.Column(sa.String(255), primary_key=True)
     ShopName = sa.Column(sa.String, sa.ForeignKey('production_shops.ShopName'))
     SectionParam = sa.Column(sa.String(255))
 
     # preparation_tasks = relationship("PreparationTasks", back_populates="shop_section")
     shop = relationship("ProductionShops", backref="shopName", lazy="joined")
+
 
 
 class clienttab(Base):

@@ -12,8 +12,10 @@ from Pages.sql.database_model import WoodProducts
 import os
 import sqlalchemy as sa
 
+import sys
 
-db_path = os.path.join("Pages", "sql", "wood_production.db")
+import os
+db_path = os.path.join(".", "wood_production.db") #Relative to the executable
 absolute_path = os.path.abspath(db_path)
 
 
