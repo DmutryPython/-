@@ -13,14 +13,15 @@ from Pages.ShopSection import ShopSection
 from PyQt6.QtWidgets import QMainWindow, QStackedWidget
 import sys
 import traceback
-from PyQt6.QtWidgets import QApplication, QMessageBox
+from PyQt6.QtWidgets import QApplication, QMessageBox, QLabel
+from PyQt6.QtCore import Qt
 
 
 def my_excepthook(exc_type, exc_value, exc_traceback):
     tb_str = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
     print(f"Unhandled exception:\n{tb_str}")  # Print to console
     QMessageBox.critical(None, "Critical Error",
-                         f"An unexpected error occurred. Please contact support.")  # Show to user
+                         tb_str)  # Show to user
     sys.exit(1)  # Exit the application
 
 
@@ -70,6 +71,7 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.ShopSection_page)
 
     # Методы для навигации
+
     def show_last_page(self):
         if self.last_page:
             self.stacked_widget.setCurrentWidget(self.last_page)

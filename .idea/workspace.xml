@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="4.0">
+    <list default="true" id="394cc0bc-c4cb-433d-b1a6-edea674f5014" name="Changes" comment="5.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Commercial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Lumber.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Order.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/PreparationTasks.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Production.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionShop.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ProductionTask.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/ShopSection.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/Technology.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/home.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/sql/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Pages/sql/database_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,10 +47,15 @@
     &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Програмирование/pycharmproject/Лесозавод (нто)&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)" />
+      <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\dist\main\Pages\sql" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)" />
       <recent name="D:\Програмирование\pycharmproject\Лесозавод (нто)\test\Pages\db" />
@@ -246,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733334193954</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="5.0">
+      <option name="closed" value="true" />
+      <created>1733334809040</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733334809040</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -271,7 +268,8 @@
     <MESSAGE value="3.6" />
     <MESSAGE value="3.7" />
     <MESSAGE value="4.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="4.0" />
+    <MESSAGE value="5.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="5.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
